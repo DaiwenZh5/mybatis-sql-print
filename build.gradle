@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.6.5'
+}
+
+group 'com.daiwenzh5'
+version '1.0-SNAPSHOT'
+
+
+repositories {
+//    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version '2020.2.3'
+    type 'IU'
+}
+patchPluginXml {
+
+    description """
+        mybatis 日志打印工具.<br>
+       <p>通过拦截控制台中的日志，自动提取 mybatis 打印的 SQL，并格式化所有参数</p>
+    """
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}

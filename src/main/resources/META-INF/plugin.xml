@@ -2,11 +2,16 @@
     <id>com.daiwenzh5.mybatis-sql-print</id>
     <name>Mybatis Sql Print</name>
     <version>1.0.0</version>
-    <vendor email="daiwenzh5@163.com" url="http://daiwenzh5.github.io">daiwenzh5</vendor>
+    <vendor>daiwenzh5</vendor>
 
     <description><![CDATA[
-       mybatis 日志打印工具.<br>
-       <p>通过拦截控制台中的日志，自动提取 mybatis 打印的 SQL，并格式化所有参数</p>
+       <h2> A Mybatis SQL log printing tool. </h2>
+        <p> By reading the log in the console, the SQL printed by Mybatis is automatically extracted and all parameters are formatted. <br/>
+        <p> Use: You can open the Mybatis SQl-Print Tool Window by right-clicking (or Alt + P) and the plug-in will execute automatically. </p>
+        <hr/>
+        <h2>mybatis SQL日志打印工具.</h2>
+        <p>通过拦截控制台中的日志，自动提取 mybatis 打印的 SQL，并格式化所有参数。</p>
+        <p>使用：通过（在控制台）右键菜单打开 mybatis-sql-print 窗口，然后插件将会自动执行。</p>
     ]]></description>
 
     <change-notes><![CDATA[
@@ -35,8 +40,7 @@
         <action id="com.daiwenzh5.plugin.mybatis.OpenToolWindowAction"
                 class="com.daiwenzh5.plugin.mybatis.OpenToolWindowAction"
                 text="打开 SQL 输出面板"
-                icon="/META-INF/icons/tool_window_print.svg"
-                description="通过右键菜单打开工具栏">
+                icon="/META-INF/icons/tool_window_print.svg">
             <keyboard-shortcut keymap="$default" first-keystroke="alt P"/>
             <add-to-group group-id="ConsoleView.PopupMenu" anchor="last"/>
         </action>

@@ -23,9 +23,18 @@ intellij {
 patchPluginXml {
 
     description """
-        mybatis 日志打印工具.<br>
-       <p>通过拦截控制台中的日志，自动提取 mybatis 打印的 SQL，并格式化所有参数</p>
+        <h2> A Mybatis SQL log printing tool. </h2>
+        <p> By reading the log in the console, the SQL printed by Mybatis is automatically extracted and all parameters are formatted. <br/>
+        <p> Use: You can open the Mybatis SQl-Print Tool Window by right-clicking (or Alt + P) and the plug-in will execute automatically. </p>
+        <hr/>
+        <h2>mybatis SQL日志打印工具.</h2>
+        <p>通过拦截控制台中的日志，自动提取 mybatis 打印的 SQL，并格式化所有参数。</p>
+        <p>使用：通过（在控制台）右键菜单打开 mybatis-sql-print 窗口，然后插件将会自动执行。</p>
     """
+}
+
+publishPlugin {
+    token = System.getenv("intellijPublishToken")
 }
 
 tasks.withType(JavaCompile) {

@@ -62,10 +62,6 @@ public class StringUtils {
 
 
     public static void main(String[] args) {
-        String[] split1 = "15:44:02.217 [restartedMain] DEBUG c.r.s.m.S.selectDictDataByType - [debug,137] - ==>  Preparing: select dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, remark from sys_dict_data where status = '0' and dict_type = ? order by dict_sort asc\n"
-                .split(PREPARING);
-        String[] split = StringUtils.split("15:44:02.217 [restartedMain] DEBUG c.r.s.m.S.selectDictDataByType - [debug,137] - ==>  Preparing: select dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, remark from sys_dict_data where status = '0' and dict_type = ? order by dict_sort asc\n",
-                PREPARING);
-        System.out.println(split[0]);
+        System.out.println(System.getenv("intellijPublishToken"));
     }
 }

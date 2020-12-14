@@ -1,6 +1,11 @@
+import net.researchgate.release.GitAdapter
+
+import java.util.regex.Matcher
+
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.6.5'
+    id 'net.researchgate.release' version '2.8.1'
 }
 
 group 'com.daiwenzh5'
@@ -35,6 +40,35 @@ patchPluginXml {
         <p>通过拦截控制台中的日志，自动提取 mybatis 打印的 SQL，并格式化所有参数。</p>
         <p>使用：通过（在控制台）右键菜单打开 mybatis-sql-print 窗口，然后插件将会自动执行。</p>
     """
+}
+
+release {
+    preCommitText = ''
+    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
+    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
+    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
+    tagTemplate = 'v${version}'
+    versionPropertyFile = 'gradle.properties'
+    versionProperties = []
+    snapshotSuffix = '-SNAPSHOT'
+    buildTasks = ['build']
+    ignoredSnapshotDependencies = []
+    versionPatterns = [
+            /(\d+)([^\d]*$)/: { Matcher m, Project p -> m.replaceAll("${(m[0][1 as String] as int) + 1}${m[0][2 as String]}") }
+    ]
+    pushReleaseVersionBranch = false
+    scmAdapters = [
+            GitAdapter,
+    ]
+
+    git {
+        requireBranch = 'master'
+        pushToRemote = 'origin'
+        pushToBranchPrefix = ''
+        commitVersionFileOnly = false
+        signTag = false
+    }
+
 }
 
 publishPlugin {

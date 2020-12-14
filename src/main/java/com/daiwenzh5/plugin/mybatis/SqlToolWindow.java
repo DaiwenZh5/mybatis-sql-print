@@ -38,6 +38,7 @@ public class SqlToolWindow implements ToolWindowFactory {
         JComponent consolePanel = createConsolePanel(console);
         Content content = toolWindow.getContentManager().getFactory().createContent(consolePanel, TOOL_WINDOW_ID, false);
         toolWindow.getContentManager().addContent(content);
+        console.scrollTo(consolePanel.getHeight());
         ConsoleViewUtils.put(project, console);
         ConsoleViewUtils.logN(project, "正在监听日志输出以重组 SQL...", LogType.TITLE);
         ConsoleViewUtils.logN(project, ConsoleViewUtils.SPLIT_LINE, LogType.SPLIT_LINE);

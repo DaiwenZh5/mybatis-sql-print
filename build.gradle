@@ -12,7 +12,10 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testCompileOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
+    compileOnly "org.projectlombok:lombok:1.18.16"
+    annotationProcessor "org.projectlombok:lombok:1.18.16"
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
@@ -20,6 +23,7 @@ intellij {
     version '2020.2.3'
     type 'IU'
 }
+
 patchPluginXml {
 
     description """
@@ -39,4 +43,8 @@ publishPlugin {
 
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
+}
+
+test {
+    useJUnitPlatform()
 }

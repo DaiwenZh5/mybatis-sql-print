@@ -15,6 +15,13 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      <label>2020.12.14</label>
+      <ul>
+        <li>修复控制台日志的最后一行 SQL 不会读取的问题</li>
+        <li>修复参数中数字类型添加引号的问题</li>
+        <li>优化代码结构</li>
+      </ul>
+      <br/>
       <label>2020.12.10</label>
       <ul>
         <li>仅用于提取 mybatis 控制台输出日志，通过字符串组装，重构 SQL。</li>
@@ -31,9 +38,10 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <consoleFilterProvider implementation="com.daiwenzh5.plugin.mybatis.LogFilterProvider"/>
-        <toolWindow factoryClass ="com.daiwenzh5.plugin.mybatis.SqlToolWindow" id="Mybatis-SQL-Print" anchor="bottom"
+        <toolWindow factoryClass ="com.daiwenzh5.plugin.mybatis.SqlToolWindow"
+                    id="Mybatis-SQL-Print" anchor="bottom"
                     icon="/META-INF/icons/tool_window_print.svg"/>
+        <console.folding implementation="com.daiwenzh5.plugin.mybatis.aop.SqlConsoleFolding"/>
     </extensions>
 
     <actions>

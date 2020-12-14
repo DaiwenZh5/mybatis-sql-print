@@ -56,7 +56,7 @@ release {
     buildTasks = ['build']
     ignoredSnapshotDependencies = []
     versionPatterns = [
-            /(\d+)([^\d]*$)/: { Matcher m, Project p -> m.replaceAll("${(m[0][1 as String] as int) + 1}${m[0][2 as String]}") }
+            /(\d+)([^\d]*$)/: { Matcher m, Project p -> m.replaceAll("${(m[0][1] as int) + 1}${m[0][2]}") }
     ]
     pushReleaseVersionBranch = false
     scmAdapters = [

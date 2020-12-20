@@ -1,6 +1,7 @@
 package com.daiwenzh5.plugin.mybatis.util;
 
 import com.daiwenzh5.plugin.mybatis.type.LogType;
+import com.intellij.execution.impl.ConsoleViewImpl;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.project.Project;
 import lombok.AccessLevel;
@@ -9,9 +10,11 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author daiwenzh5
@@ -24,7 +27,7 @@ public class ConsoleViewUtils {
     public final String PREPARING = " - ==>  Preparing: ";
     public final String PARAMETERS = " - ==> Parameters:";
     public final String TOTAL = "<==      Total:";
-    public final String SPLIT_LINE = "-----------------------------------------------------------------------------------------------------------------------";
+    public final String SPLIT_LINE = "------";
     private final Map<Project, ConsoleView> consoleViewMap = new HashMap<>();
     private final Map<Project, Integer> indexMap = new HashMap<>();
     @Getter
@@ -43,18 +46,25 @@ public class ConsoleViewUtils {
         status = Boolean.TRUE;
     }
 
-
-    public void put(Project project, ConsoleView console) {
-        consoleViewMap.put(project, console);
-    }
+//    public void put(Project project, SqlConsoleView console) {
+//        consoleViewMap.put(project, console);
+//    }
 
     @SuppressWarnings("unused")
     public ConsoleView get(Project project) {
-        return consoleViewMap.get(project);
+        // 获取 SQL 控制台
+        ConsoleView consoleView = consoleViewMap.get(project);
+        // 当缓存中不存在时新建
+        if (Objects.isNull(consoleView)) {
+            consoleView = new ConsoleViewImpl(project, false);
+            consoleViewMap.put(project, consoleView);
+        }
+        return consoleView;
     }
 
     public void log(@NotNull Project project, String info, LogType logType) {
-        consoleViewMap.get(project).print(info, logType.style);
+        ConsoleView consoleView = consoleViewMap.get(project);
+        consoleView.print(info, logType.style);
     }
 
     public void logN(@NotNull Project project, String info, LogType logType) {
@@ -77,14 +87,22 @@ public class ConsoleViewUtils {
 
         private String total = "";
 
-        public OriginSqlLog setPreparing(@NotNull Project project, @NotNull String line) {
+        public OriginSqlLog setPreparing(@NotNull String line) {
+            return setPreparing(null, line);
+        }
+
+        public OriginSqlLog setPreparing(@Nullable Project project, @NotNull String line) {
             String preparing = StringUtils.substring(line, PREPARING, true).trim();
             if (StringUtils.isNotEmpty(preparing)) {
-                Integer index = indexMap.getOrDefault(project, 0);
-                index = index + 1;
+                if (Objects.nonNull(project)) {
+                    Integer index = indexMap.getOrDefault(project, 0);
+                    index = index + 1;
+                    indexMap.put(project, index);
+                    this.info = "-- [" + index + "] " + StringUtils.substring(line, PREPARING);
+                } else {
+                    this.info = "-- " + StringUtils.substring(line, PREPARING);
+                }
                 this.preparing = preparing;
-                indexMap.put(project, index);
-                this.info = "-- [" + index + "] " +  StringUtils.substring(line, PREPARING);
             }
             return this;
         }

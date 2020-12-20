@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.daiwenzh5.mybatis-sql-print</id>
     <name>Mybatis Sql Print</name>
-    <version>1.0.0</version>
+    <version>${version}</version>
     <vendor>daiwenzh5</vendor>
 
     <description><![CDATA[
@@ -15,6 +15,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      <label>2020.12.20</label>
+      <ul>
+        <li>增加了控制台的工具栏按钮</li>
+      </ul>
+      <bt/>
       <label>2020.12.14</label>
       <ul>
         <li>修复控制台日志的最后一行 SQL 不会读取的问题</li>
@@ -38,17 +43,17 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <toolWindow factoryClass ="com.daiwenzh5.plugin.mybatis.SqlToolWindow"
-                    id="Mybatis-SQL-Print" anchor="bottom"
-                    icon="/META-INF/icons/tool_window_print.svg"/>
+        <toolWindow factoryClass ="com.daiwenzh5.plugin.mybatis.ui.SqlPrintWindow"
+                    id="Mybatis SQL Print" anchor="bottom"
+                    icon="Icons.PRINT"/>
         <console.folding implementation="com.daiwenzh5.plugin.mybatis.aop.SqlConsoleFolding"/>
     </extensions>
 
     <actions>
-        <action id="com.daiwenzh5.plugin.mybatis.OpenToolWindowAction"
-                class="com.daiwenzh5.plugin.mybatis.OpenToolWindowAction"
+        <action id="com.daiwenzh5.plugin.mybatis.action.SwitchSqlPrintWindowAction"
+                class="com.daiwenzh5.plugin.mybatis.action.SwitchSqlPrintWindowAction"
                 text="打开 SQL 输出面板"
-                icon="/META-INF/icons/tool_window_print.svg">
+                icon="Icons.PRINT">
             <keyboard-shortcut keymap="$default" first-keystroke="alt P"/>
             <add-to-group group-id="ConsoleView.PopupMenu" anchor="last"/>
         </action>

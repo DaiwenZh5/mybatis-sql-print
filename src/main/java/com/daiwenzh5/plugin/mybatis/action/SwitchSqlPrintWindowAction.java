@@ -1,33 +1,26 @@
-package com.daiwenzh5.plugin.mybatis;
+package com.daiwenzh5.plugin.mybatis.action;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindowManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+
+import static com.daiwenzh5.plugin.mybatis.ui.SqlPrintWindow.SQL_PRINT_WINDOW_ID;
 
 /**
  * @author daiwenzh5
  * @description 打开 SQL 监听面板的动作
  * @date 2020/12/8
  */
-public class OpenToolWindowAction extends AnAction {
-
-    public static final String TOOL_WINDOW_ID = "Mybatis-SQL-Print";
-
-    @Override
-    public void update(AnActionEvent e) {
-        Project project = e.getProject();
-        e.getPresentation().setEnabledAndVisible(project != null);
-    }
+public class SwitchSqlPrintWindowAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
         // 显示控制台
         Objects.requireNonNull(ToolWindowManager.getInstance(Objects.requireNonNull(event.getProject()))
-                .getToolWindow(TOOL_WINDOW_ID))
+                .getToolWindow(SQL_PRINT_WINDOW_ID))
                 .show();
     }
 }

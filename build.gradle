@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'com.daiwenzh5'
-version '1.0'
+version version
 
 
 repositories {

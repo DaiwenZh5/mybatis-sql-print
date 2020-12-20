@@ -2,3 +2,6 @@
 /.gradle/
 /.idea/
 /gradle/
+gradle.properties
+src/main/generated/
+

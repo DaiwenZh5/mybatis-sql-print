@@ -23,7 +23,8 @@ import java.awt.*;
  */
 public class SqlPrintWindow implements ToolWindowFactory {
 
-    public static final String SQL_PRINT_WINDOW_ID = "输出面板";
+    public static final String SQL_PRINT_WINDOW_ID = "Mybatis SQL Print";
+    public static final String DISPLAY_NAME = "输出面板";
 
     /**
      * 容器
@@ -35,7 +36,7 @@ public class SqlPrintWindow implements ToolWindowFactory {
         ConsoleView consoleView = ConsoleViewUtils.get(project);
         this.createUi(consoleView);
         Content content = toolWindow.getContentManager().getFactory()
-                .createContent(container, SQL_PRINT_WINDOW_ID, false);
+                .createContent(container, DISPLAY_NAME, false);
         toolWindow.getContentManager().addContent(content);
         ConsoleViewUtils.logN(project, "正在监听日志输出以重组 SQL...", LogType.TITLE);
         ConsoleViewUtils.logN(project, ConsoleViewUtils.SPLIT_LINE, LogType.SPLIT_LINE);

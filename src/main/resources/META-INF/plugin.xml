@@ -18,6 +18,8 @@
       <label>2020.12.20</label>
       <ul>
         <li>增加了控制台的工具栏按钮</li>
+        <li>修复只打印 SELECT 语句的问题</li>
+        <li>调整了 SQL 格式化代码</li>
       </ul>
       <bt/>
       <label>2020.12.14</label>

@@ -27,6 +27,7 @@ public class ConsoleViewUtils {
     public final String PREPARING = " - ==>  Preparing: ";
     public final String PARAMETERS = " - ==> Parameters:";
     public final String TOTAL = "<==      Total:";
+    public final String UPDATES = "<==    Updates:";
     public final String SPLIT_LINE = "------";
     private final Map<Project, ConsoleView> consoleViewMap = new HashMap<>();
     private final Map<Project, Integer> indexMap = new HashMap<>();
@@ -45,10 +46,6 @@ public class ConsoleViewUtils {
     public void active() {
         status = Boolean.TRUE;
     }
-
-//    public void put(Project project, SqlConsoleView console) {
-//        consoleViewMap.put(project, console);
-//    }
 
     @SuppressWarnings("unused")
     public ConsoleView get(Project project) {
@@ -85,7 +82,7 @@ public class ConsoleViewUtils {
 
         private String parameters = "";
 
-        private String total = "";
+        private String result = "";
 
         public OriginSqlLog setPreparing(@NotNull String line) {
             return setPreparing(null, line);
@@ -115,10 +112,11 @@ public class ConsoleViewUtils {
             return this;
         }
 
-        public OriginSqlLog setTotal(@NotNull String line) {
-            String total = StringUtils.substring(line, TOTAL, true).trim();
-            if (StringUtils.isNotEmpty(total)) {
-                this.total = total;
+        public OriginSqlLog setResult(@NotNull String line) {
+            String result = StringUtils.substring(line,
+                    line.contains(TOTAL) ? TOTAL : UPDATES, true).trim();
+            if (StringUtils.isNotEmpty(result)) {
+                this.result = result;
                 this.endFlag = true;
             }
             return this;

@@ -26,14 +26,14 @@ public class SqlConsoleFolding extends ConsoleFolding {
             ConsoleViewUtils.OriginSqlLog originSqlLog = ConsoleViewUtils.getOriginSqlLog()
                     .setPreparing(project,line)
                     .setParameters(line)
-                    .setTotal(line);
+                    .setResult(line);
             // 当 SQL 读取结束后进行格式化并打印
             if (originSqlLog.isEndFlag()) {
                 String restoreSql = FormatUtils.restore(originSqlLog);
                 log.info("重组 SQL：{}", restoreSql);
                 ConsoleViewUtils.logN(project, originSqlLog.getInfo(), LogType.ANNOTATION);
                 ConsoleViewUtils.logN(project, restoreSql, LogType.SQL);
-                ConsoleViewUtils.logN(project, "Total: " + originSqlLog.getTotal(), LogType.ANNOTATION);
+                ConsoleViewUtils.logN(project, "Total: " + originSqlLog.getResult(), LogType.ANNOTATION);
                 ConsoleViewUtils.logN(project, ConsoleViewUtils.SPLIT_LINE, LogType.SPLIT_LINE);
             }
         }

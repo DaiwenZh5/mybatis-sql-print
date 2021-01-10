@@ -13,11 +13,10 @@ public class FormatUtilsTest {
         ConsoleViewUtils.OriginSqlLog originSqlLog = new ConsoleViewUtils.OriginSqlLog()
                 .readLog(null,"15:33:21.917 [restartedMain] DEBUG c.r.s.m.S.selectDictDataByType - [debug,137] - ==>  Preparing: select dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, remark from sys_dict_data where status = '0' and dict_type = ? order by dict_sort asc\n")
                 .readLog(null,"15:33:21.926 [restartedMain] DEBUG c.r.s.m.S.selectDictDataByType - [debug,137] - ==> Parameters: sys_user_sex(Long)\n");
-        String restore = FormatUtils.restore(originSqlLog, true);
-        System.out.println(restore);
-//        Assert.assertEquals(restore, "select dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, remark " +
-//                "from sys_dict_data " +
-//                "where status = '0' and dict_type = sys_user_sex order by dict_sort asc");
+        String restore = FormatUtils.restore(originSqlLog, false);
+        Assert.assertEquals(restore, "select dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, remark " +
+                "from sys_dict_data " +
+                "where status = '0' and dict_type = sys_user_sex order by dict_sort asc");
     }
 
     @Test

@@ -4,7 +4,7 @@ import com.daiwenzh5.plugin.mybatis.type.LogType;
 import com.intellij.execution.impl.ConsoleViewImpl;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.project.Project;
-import lombok.AccessLevel;
+import com.intellij.openapi.util.text.StringUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,27 +24,22 @@ import java.util.Objects;
 public class ConsoleViewUtils {
 
 
-    public final String PREPARING = " - ==>  Preparing: ";
-    public final String PARAMETERS = " - ==> Parameters:";
-    public final String TOTAL = "<==      Total:";
-    public final String UPDATES = "<==    Updates:";
+    public final String PREPARING = "==>  Preparing:";
+    public final String PARAMETERS = "==> Parameters:";
     public final String SPLIT_LINE = "------";
     private final Map<Project, ConsoleView> consoleViewMap = new HashMap<>();
     private final Map<Project, Integer> indexMap = new HashMap<>();
     @Getter
     private final OriginSqlLog originSqlLog = new OriginSqlLog();
 
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    private boolean status = Boolean.TRUE;
+    private final Map<Project, Boolean> statusMap = new HashMap<>();
 
-    public boolean isActive() {
-        return status;
+    public Boolean isActive(@NotNull Project project) {
+        return statusMap.getOrDefault(project, Boolean.FALSE);
     }
 
-    @SuppressWarnings("unused")
-    public void active() {
-        status = Boolean.TRUE;
+    public void active(@NotNull Project project) {
+        statusMap.put(project, Boolean.TRUE);
     }
 
     @SuppressWarnings("unused")
@@ -60,7 +55,7 @@ public class ConsoleViewUtils {
     }
 
     public void log(@NotNull Project project, String info, LogType logType) {
-        ConsoleView consoleView = consoleViewMap.get(project);
+        ConsoleView consoleView = ConsoleViewUtils.get(project);
         consoleView.print(info, logType.style);
     }
 
@@ -82,45 +77,24 @@ public class ConsoleViewUtils {
 
         private String parameters = "";
 
-        private String result = "";
-
-        public OriginSqlLog setPreparing(@NotNull String line) {
-            return setPreparing(null, line);
-        }
-
-        public OriginSqlLog setPreparing(@Nullable Project project, @NotNull String line) {
-            String preparing = StringUtils.substring(line, PREPARING, true).trim();
-            if (StringUtils.isNotEmpty(preparing)) {
+        public OriginSqlLog readLog(@Nullable Project project, @NotNull String line) {
+            // 仅当上一条 SQL 结束时接收新的语句
+            if (!endFlag && line.contains(PREPARING)) {
+                String[] split = line.split(PREPARING);
                 if (Objects.nonNull(project)) {
                     Integer index = indexMap.getOrDefault(project, 0);
                     index = index + 1;
                     indexMap.put(project, index);
-                    this.info = "-- [" + index + "] " + StringUtils.substring(line, PREPARING);
+                    this.info = "-- [" + index + "] " + split[0].trim();
                 } else {
-                    this.info = "-- " + StringUtils.substring(line, PREPARING);
+                    this.info = "-- " + split[0].trim();
                 }
-                this.preparing = preparing;
-            }
-            return this;
-        }
-
-        public OriginSqlLog setParameters(@NotNull String line) {
-            String parameters = StringUtils.substring(line, PARAMETERS, true).trim();
-            if (StringUtils.isNotEmpty(parameters)) {
-                this.parameters = parameters;
-            }
-            return this;
-        }
-
-        public OriginSqlLog setResult(@NotNull String line) {
-            String result = StringUtils.substring(line,
-                    line.contains(TOTAL) ? TOTAL : UPDATES, true).trim();
-            if (StringUtils.isNotEmpty(result)) {
-                this.result = result;
+                this.preparing = split[1];
+            } else if (!endFlag && line.contains(PARAMETERS)) {
+                this.parameters = Objects.requireNonNull(StringUtil.substringAfter(line, PARAMETERS)).trim();
                 this.endFlag = true;
             }
             return this;
         }
-
     }
 }

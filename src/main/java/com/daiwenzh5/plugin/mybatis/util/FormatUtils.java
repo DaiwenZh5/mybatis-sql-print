@@ -32,11 +32,12 @@ public class FormatUtils {
                 builder.append("'").append(arg).append("'").append(fragments[i]);
             }
         }
+        // 重置结束标识
         log.setEndFlag(false);
         if (isFormat) {
-            return SqlFormatter.format(builder.toString());
+            return SqlFormatter.format(builder.toString().trim());
         }
-        return builder.toString();
+        return builder.toString().trim();
     }
 
         private boolean isNumber(String arg) {

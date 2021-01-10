@@ -38,6 +38,8 @@ public class SqlPrintWindow implements ToolWindowFactory {
         Content content = toolWindow.getContentManager().getFactory()
                 .createContent(container, DISPLAY_NAME, false);
         toolWindow.getContentManager().addContent(content);
+        // 激活控制台
+        ConsoleViewUtils.active(project);
         ConsoleViewUtils.logN(project, "正在监听日志输出以重组 SQL...", LogType.TITLE);
         ConsoleViewUtils.logN(project, ConsoleViewUtils.SPLIT_LINE, LogType.SPLIT_LINE);
 //        PropertiesCenter.init(project);

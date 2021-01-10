@@ -15,13 +15,18 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      <label>2020.1.10</label>
+      <ul>
+        <li>修复插件未激活时 Idea 提示空指针的问题</li>
+      </ul>
+      <br/>
       <label>2020.12.20</label>
       <ul>
         <li>增加了控制台的工具栏按钮</li>
         <li>修复只打印 SELECT 语句的问题</li>
         <li>调整了 SQL 格式化代码</li>
       </ul>
-      <bt/>
+      <br/>
       <label>2020.12.14</label>
       <ul>
         <li>修复控制台日志的最后一行 SQL 不会读取的问题</li>
